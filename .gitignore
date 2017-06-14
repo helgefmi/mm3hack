@@ -1,0 +1,6 @@
+*.nes
+*.deb
+*.pyc
+.*.sw[nop]
+std*.txt
+*.srm
