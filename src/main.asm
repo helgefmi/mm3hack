@@ -277,6 +277,9 @@ handle_stage_select:
     LDA $12 ; CLC ; ADC $13
     TAY ; CPY #$04 ; BNE .select_normal_stage
 
+    // Make it so we've beaten no Wily stages
+    LDA #$00 ; STA $75
+
     // Enter Break Man
     JMP $9ABC
 
