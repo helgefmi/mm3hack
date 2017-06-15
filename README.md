@@ -48,10 +48,6 @@
 
 - 2 player deathmatch support via internet.
 
-## Bugs
-
-- Time carries over to the next stage after killing Wily boss.
-
 ## Contribute
 
 The asm code compiles with xkas-plus 0.14 or something like that. You also need ips.pl or similar. Check the Makefile.

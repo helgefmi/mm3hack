@@ -16,6 +16,9 @@ org $DC5C
     // Comment out storing "stages done" for robot masters
     NOP ; NOP
 
+org $CA22
+    JSR start_of_stage
+
 // nmi
 org $C0E7
     JSR nmi_hook ; NOP
@@ -47,6 +50,12 @@ org $FF5B
 
 // trans start
 org $F320
+start_of_stage:
+    // This is called at the very start of a stage (when READY blinks).
+    LDA #$0 ; STA {timer_frames} ; STA {timer_seconds}
+    JSR $FF21
+    RTS
+
 trans_start:
   .hori:
     JSR .main
