@@ -63,8 +63,10 @@ handle_menu:
     LDA #$18 ; STA $F4
     LDA #$13 ; STA $F5
 
-    // Pop current return address off stack
-    PLA ; PLA
+    // We need to reset the stack to where it would usually be when going to $9212,
+    // else it would continue to grow and make the game crash eventually.
+    PLA ; PLA ; PLA ; PLA ; PLA
+    PLA ; PLA ; PLA ; PLA ; PLA
 
     // Make sure it goes to menu initializing code after `JMP {org_switchbanks}`.
     LDA #$92 ; PHA
@@ -178,7 +180,7 @@ trans_frame:
 
 // oam
 oam_hook:
-    // Thiss call completely erases the oam buffer, making it a perfect place
+    // This call completely erases the oam buffer, making it a perfect place
     // to populate it with whatever we want.
     JSR $C5E9
 
