@@ -1,3 +1,5 @@
+# Features
+
 ## Stage selection
 
 - Press SELECT during Stage Select screen to toggle which route you are using (Top first, Magnet first, Gemini first).
@@ -30,7 +32,13 @@
 
 - Currently at 46 extra cpu cycles with an extra 14 every 60th frame. I would be very surprised if that affects lag (there's more than 1.5 mill cpu cycles available in a frame afaik.)
 
-## TODO (if the stars align)
+## Go to Stage Select
+
+- You can go to Stage Select anytime by opening up the pause menu (pressing START during gameplay) and then pressing SELECT once.
+
+- The graphics may look a bit funny for a little while, but it should normalize as soon as the menu is fully loaded.
+
+# TODO (if the stars align)
 
 - Fix frame counter for boss fights.
 
@@ -48,6 +56,6 @@
 
 - 2 player deathmatch support via internet.
 
-## Contribute
+# Contribute
 
 The asm code compiles with xkas-plus 0.14 or something like that. You also need ips.pl or similar. Check the Makefile.

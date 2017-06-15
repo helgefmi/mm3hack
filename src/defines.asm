@@ -1,5 +1,6 @@
 define org_menu_idle $9261
 define org_load_stage $C8F7
+define org_switchbanks $FF6B
 
 // Free ram: 0x7E0+ ?
 define current_order $7E0

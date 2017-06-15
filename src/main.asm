@@ -5,6 +5,72 @@ banksize $2000
 
 incsrc "defines.asm"
 
+
+bank $02
+
+org $A023
+    JSR handle_menu
+
+
+org $AD28
+handle_menu:
+    LDA $14 ; AND #$20 ; BEQ .done
+
+    LDA #$67 ; STA {debug}
+
+    LDX #$00
+    LDA #$F8
+  .oam_loop:
+    STA $200,x
+    INX ; INX ; INX ; INX ; BEQ .oam_loop_done
+  .oam_loop_done:
+
+  .remove_menu_loop:
+    LDA $51
+    CMP #$E8
+    BEQ .remove_menu_done
+    LDA $51
+    CLC
+    ADC #$04
+    STA $51
+    JSR $A2EA
+    DEC $95
+    JMP .remove_menu_loop
+
+  .remove_menu_done:
+    // Sets correct palette for the menu.
+    LDA #$37 ; STA $619
+    LDA #$26 ; STA $61A
+    LDA #$15 ; STA $61B
+    LDA #$00 ; STA $61C
+    LDA #$37 ; STA $61D
+    LDA #$26 ; STA $61E
+    LDA #$0F ; STA $61F
+
+    // Set correct CHR banks. Not all of them really needed
+    LDA #$7C ; STA $E8 ; LDA #$7E ; STA $E9
+    LDA #$38 ; STA $EA ; LDA #$39 ; STA $EB
+    LDA #$36 ; STA $EC ; LDA #$34 ; STA $ED
+
+    // Change to these PRG banks
+    LDA #$18 ; STA $F4
+    LDA #$13 ; STA $F5
+
+    // Pop current return address off stack
+    PLA ; PLA
+
+    // Make sure it goes to menu initializing code after `JMP {org_switchbanks}`.
+    LDA #$92 ; PHA
+    LDA #$11 ; PHA
+
+    JMP {org_switchbanks}
+
+  .done:
+    JSR $A398
+    RTS
+
+warnpc $AE00
+
 bank $1E
 
 // random hexedits
@@ -181,10 +247,10 @@ warnpc $F580
 bank $18
 
 org $92FD
-    JMP handle_menu
+    JMP handle_stage_select
 
 org $9E4A
-handle_menu:
+handle_stage_select:
     LDA {current_order_is_drawn} ; BNE .current_order_is_drawn
     INC {current_order_is_drawn} ; JSR draw_current_order
 
@@ -233,7 +299,7 @@ handle_menu:
     LDA {current_order} ; ADC #1
     CMP #3 ; BNE .save_current_order
     LDA #0
-    
+
   .save_current_order:
     STA {current_order}
     JSR draw_current_order
