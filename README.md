@@ -36,8 +36,6 @@
 
 - You can go to Stage Select anytime by opening up the pause menu (pressing START during gameplay) and then pressing SELECT once.
 
-- The graphics may look a bit funny for a little while, but it should normalize as soon as the menu is fully loaded.
-
 # TODO (if the stars align)
 
 - Fix frame counter for boss fights.

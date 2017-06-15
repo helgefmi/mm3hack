@@ -16,8 +16,10 @@ org $AD28
 handle_menu:
     LDA $14 ; AND #$20 ; BEQ .done
 
-    LDA #$67 ; STA {debug}
+    // Fade to black
+    LDA #$00 ; STA $EE ; JSR $C752
 
+    // Remove OAM entries
     LDX #$00
     LDA #$F8
   .oam_loop:
@@ -38,14 +40,13 @@ handle_menu:
     JMP .remove_menu_loop
 
   .remove_menu_done:
+
     // Sets correct palette for the menu.
-    LDA #$37 ; STA $619
-    LDA #$26 ; STA $61A
-    LDA #$15 ; STA $61B
-    LDA #$00 ; STA $61C
-    LDA #$37 ; STA $61D
-    LDA #$26 ; STA $61E
-    LDA #$0F ; STA $61F
+    LDX #$0F
+  .loop_palette:
+    LDA stage_select_palette,x
+    STA $610,x
+    DEX ; BPL .loop_palette
 
     // Set correct CHR banks. Not all of them really needed
     LDA #$7C ; STA $E8 ; LDA #$7E ; STA $E9
@@ -68,6 +69,9 @@ handle_menu:
   .done:
     JSR $A398
     RTS
+
+stage_select_palette:
+    db $0F,$30,$15,$11,$0F,$37,$21,$10,$0F,$37,$26,$15,$0F,$37,$26,$0F
 
 warnpc $AE00
 
