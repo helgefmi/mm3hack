@@ -51,6 +51,9 @@ handle_menu:
     // This tells the game we no longer have a menu up
     LDA #$00 ; STA $50
 
+    // Fixes a weird "bug" where it softlocks if you scrolled horizontally.
+    LDA #$00 ; STA $FA ; STA $FC
+
     // Set correct CHR banks. Not all of them really needed
     LDA #$7C ; STA $E8 ; LDA #$7E ; STA $E9
     LDA #$38 ; STA $EA ; LDA #$39 ; STA $EB
