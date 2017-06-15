@@ -38,9 +38,19 @@
 
 - Make it work for Rockman 3. I don't have a disassembly for that game so it will be quite time consuming.
 
+- Press SELECT inside the weapon menu to go back to the Stage Select screen?
+
+- Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).
+
+- Skip CAPCOM intro thing.
+
 - Teleport within stages, similar to lttphack.
 
 - 2 player deathmatch support via internet.
+
+## Bugs
+
+- Time carries over to the next stage after killing Wily boss.
 
 ## Contribute
 

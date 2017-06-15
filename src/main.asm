@@ -3,24 +3,7 @@ header
 
 banksize $2000
 
-define org_no_menu_action $9261
-define org_load_stage $C8F7
-
-// Free ram: 0x1FE0+ ?
-define current_order $7E0
-define current_order_is_drawn $7E1
-define debug $7E2
-define flag_trans $7E3
-
-define timer_frames $7E4
-define timer_seconds $7E5
-
-define last_frames $7E6
-define last_seconds $7E7
-
-define tmp1 $7EA
-define tmp2 $7EB
-
+incsrc "defines.asm"
 
 bank $1E
 
@@ -95,14 +78,23 @@ trans_frame:
     RTS
 
   .main:
+    // Swaps in the CHR ROM with our counter digits in.
+    // Luckily, the game switches to the appropriate one after the transition by itself.
     LDA #$05 ; STA $8000 ; LDA #$66 ; STA $8001
+
+    // Indicate that we are still transitioning since we want to transfer the counter to the oam each frame.
     INC {flag_trans}
+
+    // Set them to 0 every frame during transition. It's overkill, but
+    // we don't have to "detect" the last transition frame.
     LDA #0 ; STA {timer_frames} ; STA {timer_seconds}
     RTS
 
 
 // oam
 oam_hook:
+    // Thiss call completely erases the oam buffer, making it a perfect place
+    // to populate it with whatever we want.
     JSR $C5E9
 
     LDA {flag_trans} ; BNE .transition
@@ -136,15 +128,15 @@ oam_hook:
     TYA ; LSR ; LSR ; LSR ; LSR ; ORA #$C0 ; STA $0211
     TYA ; AND #$0F ; ORA #$C0 ; STA $0215
 
+    // This is supposed to point to the next slot in the oam buffer.
     LDA #$18 ; STA $97
     RTS
 
 
-// nmi  
+// nmi
 nmi_hook:
-    //LDA #$67 ; STA {debug}
     INC $92
-    
+
     INC {timer_frames} ; LDA {timer_frames} ; CMP #60 ; BNE .done
     INC {timer_seconds} ; LDA #0 ; STA {timer_frames}
 
@@ -152,8 +144,10 @@ nmi_hook:
     LDX #$ff
     RTS
 
+
 // util
 hex_to_dec:
+    // Maps e.g. #69 to $69.
     STA {tmp1}
     LSR
     ADC {tmp1}
@@ -183,16 +177,15 @@ org $92FD
 org $9E4A
 handle_menu:
     LDA {current_order_is_drawn} ; BNE .current_order_is_drawn
-    LDA #$01 ; STA {current_order_is_drawn} ; JSR draw_current_order
+    INC {current_order_is_drawn} ; JSR draw_current_order
 
   .current_order_is_drawn:
-    // Check if we pressed A
     LDA $14 ; AND #$10 ; BNE .pressed_start
     LDA $14 ; AND #$20 ; BNE .pressed_select
     LDA $14 ; AND #$40 ; BNE .pressed_b
     LDA $14 ; AND #$80 ; BNE .pressed_a
 
-    JMP {org_no_menu_action}
+    JMP {org_menu_idle}
 
   .pressed_a:
     // Cursor position
@@ -218,7 +211,7 @@ handle_menu:
     JMP stage_select
 
   .no_action:
-    JMP {org_no_menu_action}
+    JMP {org_menu_idle}
 
   .pressed_b:
     LDA $12 ; CLC ; ADC $13
@@ -235,13 +228,14 @@ handle_menu:
   .save_current_order:
     STA {current_order}
     JSR draw_current_order
-    JMP {org_no_menu_action}
+    JMP {org_menu_idle}
 
 
 stage_select:
-    STA $22
+    // Store stage index
+    STA $22 ; STA $0F
 
-    STA $0F ; TYA ; PHA
+    TYA ; PHA
 
     LDA {current_order}
     ASL ; ASL ; ASL ; ASL ; ASL ; TAY
