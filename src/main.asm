@@ -324,7 +324,7 @@ stage_select:
 
   .reset_loop:
     STA $A3,x
-    DEX ; BNE .reset_loop
+    DEX ; BPL .reset_loop
 
     STA $6E
     STA $60 ; STA $61
