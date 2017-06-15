@@ -223,7 +223,7 @@ nmi_hook:
     INC {timer_seconds} ; LDA #0 ; STA {timer_frames}
 
   .done:
-    LDX #$ff
+    LDX #$FF
     RTS
 
 
@@ -351,43 +351,43 @@ stage_select:
     // This needs a rewrite
   .order_weapons:
     // Top first
-    db $4, $a7, $a9 // top
-    db $7, $ac, $ab // shadow
-    db $2, $a3, $a9 // gemini
-    db $0, $a4, $ad // needle
-    db $1, $a6, $a9 // magnet
-    db $3, $a5, $a9 // hard
-    db $5, $a8, $a9 // snake
-    db $6, $aa, $a9 // spark
-    db $ff, $ff, $ff
-    db $ff, $ff, $ff
-    db $ff, $ff
+    db $4, $A7, $A9 // top
+    db $7, $AC, $AB // shadow
+    db $2, $A3, $A9 // gemini
+    db $0, $A4, $AD // needle
+    db $1, $A6, $A9 // magnet
+    db $3, $A5, $A9 // hard
+    db $5, $A8, $A9 // snake
+    db $6, $AA, $A9 // spark
+    db $FF, $FF, $FF
+    db $FF, $FF, $FF
+    db $FF, $FF
 
     // Magnet first
-    db $1, $a6, $a9 // magnet
-    db $3, $a5, $a9 // hard
-    db $4, $a7, $a9 // top
-    db $7, $ac, $ab // shadow
-    db $2, $a3, $a9 // gemini
-    db $0, $a4, $ad // needle
-    db $5, $a8, $a9 // snake
-    db $6, $aa, $a9 // spark
-    db $ff, $ff, $ff
-    db $ff, $ff, $ff
-    db $ff, $ff
+    db $1, $A6, $A9 // magnet
+    db $3, $A5, $A9 // hard
+    db $4, $A7, $A9 // top
+    db $7, $AC, $AB // shadow
+    db $2, $A3, $A9 // gemini
+    db $0, $A4, $AD // needle
+    db $5, $A8, $A9 // snake
+    db $6, $AA, $A9 // spark
+    db $FF, $FF, $FF
+    db $FF, $FF, $FF
+    db $FF, $FF
 
     // Gemini first
-    db $2, $a3, $a9 // gemini
-    db $0, $a4, $ad // needle
-    db $6, $aa, $a9 // spark
-    db $1, $a6, $a9 // magnet
-    db $3, $a5, $a9 // hard
-    db $4, $a7, $a9 // top
-    db $7, $ac, $ab // shadow
-    db $5, $a8, $a9 // snake
-    db $ff, $ff, $ff
-    db $ff, $ff, $ff
-    db $ff, $ff
+    db $2, $A3, $a9 // gemini
+    db $0, $A4, $aD // needle
+    db $6, $AA, $a9 // spark
+    db $1, $A6, $a9 // magnet
+    db $3, $A5, $a9 // hard
+    db $4, $A7, $a9 // top
+    db $7, $AC, $aB // shadow
+    db $5, $A8, $a9 // snake
+    db $FF, $FF, $FF
+    db $FF, $FF, $FF
+    db $FF, $FF
 
 
 draw_current_order:
