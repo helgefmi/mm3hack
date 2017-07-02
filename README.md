@@ -40,17 +40,9 @@
 
 - Fix frame counter for boss fights.
 
-- Make frame counter go up to 999.
-
-- Make it work for Rockman 3. I don't have a disassembly for that game so it will be quite time consuming.
-
 - Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).
 
-- Skip CAPCOM intro thing.
-
 - Teleport within stages, similar to lttphack.
-
-- 2 player deathmatch support via internet.
 
 # Contribute
 
