@@ -38,6 +38,14 @@
 
 # TODO (if the stars align)
 
+- Clear counter after each boss in refights.
+
+- Fix problems in the end of Gemini stage.
+
+- Fix bug with loading Proto "stage" sometimes.
+
+- Fix invalid tile map after killing bosses sometimes (kill boss, start & select, enter stage).
+
 - Fix frame counter for boss fights.
 
 - Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).

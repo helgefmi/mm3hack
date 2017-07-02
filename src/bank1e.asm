@@ -72,6 +72,12 @@ trans_start:
     JSR {org_trans_start_vert_jsr}
     RTS
 
+  .boss:
+    JSR $F89A
+    JSR .main
+    LDA #120 ; STA {flag_trans}
+    RTS
+
   .main:
     LDA {timer_frames} ; STA {last_frames}
     LDA {timer_seconds} ; STA {last_seconds}
@@ -91,12 +97,8 @@ trans_frame:
     RTS
 
   .main:
-    // Swaps in the CHR ROM with our counter digits in.
-    // Luckily, the game switches to the appropriate one after the transition by itself.
-    LDA #$05 ; STA $8000 ; LDA #$66 ; STA $8001
-
     // Indicate that we are still transitioning since we want to transfer the counter to the oam each frame.
-    INC {flag_trans}
+    LDA #$1 ; STA {flag_trans}
 
     // Set them to 0 every frame during transition. It's overkill, but
     // we don't have to "detect" the last transition frame.
@@ -114,7 +116,12 @@ oam_hook:
     RTS
 
   .transition:
-    LDA #0 ; STA {flag_trans}
+    // Swaps in the CHR ROM with our counter digits in.
+    // Luckily, the game switches to the appropriate one after the transition by itself.
+    LDA #$05 ; STA $8000 ; LDA #$66 ; STA $8001
+
+    // We use DEC here to make it possible to set flag_trans to e.g. 255 for 255 frames of showing the counter.
+    DEC {flag_trans}
 
     LDA {last_seconds} ; JSR hex_to_dec ; TAX
     LDA {last_frames} ; JSR hex_to_dec ; TAY

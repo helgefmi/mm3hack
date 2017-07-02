@@ -18,9 +18,11 @@ define org_trans_start_vert_jsr $EB6D
 define org_trans_frame_hori_hook $E5E3
 define org_trans_frame_vert_hook $E623
 define org_trans_frame_hori_jsr $E467
+define org_trans_boss_hook $82BA
 
 incsrc "defines.asm"
 incsrc "bank02.asm"
 incsrc "bank18.asm"
+incsrc "bank1c.asm"
 incsrc "bank1e.asm"
 incsrc "gfx.asm"
