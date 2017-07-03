@@ -24,13 +24,9 @@
 
 - Should show frames including lag frames (aka real time frames). I don't know the game engine by heart so it will have to be verified by testing more.
 
-- Currently works for transitions only, not boss fights (and possibly other things I haven't tested yet).
+- Due to limitations in the game, the counter is only shown "briefly" (1 second) and not all the time.
 
-- Due to limitations in the game, the counter is only shown "briefly" during transitions.
-
-- The counter resets on the last frame of the transition, so the transitions itself is not part of the time. This was by choice, as I'm doing a lot of extra work during the transitions, which means it would be less accurate in regards to lag.
-
-- Currently at 46 extra cpu cycles with an extra 14 every 60th frame. I would be very surprised if that affects lag (there's more than 1.5 mill cpu cycles available in a frame afaik.)
+- I've not taken the (long) time to make sure a normal gameplay frame has correct cycle count, but I doubt it should affect lag.
 
 ## Go to Stage Select
 
@@ -43,8 +39,6 @@
 - Fix problems in the end of Gemini stage.
 
 - Fix bug with loading Proto "stage" sometimes.
-
-- Fix invalid tile map after killing bosses sometimes (kill boss, start & select, enter stage).
 
 - Fix frame counter for boss fights.
 

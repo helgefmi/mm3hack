@@ -4,7 +4,7 @@ define org_switchbanks $FF6B
 define current_order $7E0
 define current_order_is_drawn $7E1
 define debug $7E2
-define flag_trans $7E3
+define trans_timer $7E3
 
 define timer_frames $7E4
 define timer_seconds $7E5

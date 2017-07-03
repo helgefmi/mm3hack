@@ -15,9 +15,6 @@ define org_stages_done_robo $DC54
 define org_trans_start_hori_hook $E2CD
 define org_trans_start_vert_hook $E38D
 define org_trans_start_vert_jsr $EB65
-define org_trans_frame_hori_hook $E5DB
-define org_trans_frame_vert_hook $E61B
-define org_trans_frame_hori_jsr $E45F
 define org_trans_boss_hook $82AC
 
 incsrc "defines.asm"

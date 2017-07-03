@@ -36,17 +36,6 @@ org {org_trans_start_vert_hook}
     JSR trans_start.vert
 
 
-// trans frame
-org {org_trans_frame_hori_hook}
-    // JSR $E467
-    JSR trans_frame.hori
-
-org {org_trans_frame_vert_hook}
-    // LDA $23 : AND #$04
-    JSR trans_frame.vert
-    NOP
-
-
 // oam
 org $FF5B
     JSR oam_hook
@@ -75,34 +64,14 @@ trans_start:
   .boss:
     JSR $F89A
     JSR .main
-    LDA #120 ; STA {flag_trans}
     RTS
 
   .main:
+    // Show frame counter for 1 second.
+    LDA #60 ; STA {trans_timer}
+
     LDA {timer_frames} ; STA {last_frames}
     LDA {timer_seconds} ; STA {last_seconds}
-    RTS
-
-
-// trans frame
-trans_frame:
-  .hori:
-    JSR .main
-    JSR {org_trans_frame_hori_jsr}
-    RTS
-
-  .vert:
-    JSR .main
-    LDA $23 ; AND #$04
-    RTS
-
-  .main:
-    // Indicate that we are still transitioning since we want to transfer the counter to the oam each frame.
-    LDA #$1 ; STA {flag_trans}
-
-    // Set them to 0 every frame during transition. It's overkill, but
-    // we don't have to "detect" the last transition frame.
-    LDA #0 ; STA {timer_frames} ; STA {timer_seconds}
     RTS
 
 
@@ -112,16 +81,23 @@ oam_hook:
     // to populate it with whatever we want.
     JSR $C5E9
 
-    LDA {flag_trans} ; BNE .transition
+    LDA {trans_timer} ; BNE .transition
     RTS
 
   .transition:
+    DEC {trans_timer} ; BNE .not_done
+
+    // Makes the NMI restore the correct banks (remove digits from tile map).
+    LDA #$01 ; STA $1B
+
+  .not_done:
+    // Set them to 0 every frame during transition. It's overkill, but
+    // we don't have to "detect" the last transition frame.
+    LDA #0 ; STA {timer_frames} ; STA {timer_seconds}
+
     // Swaps in the CHR ROM with our counter digits in.
     // Luckily, the game switches to the appropriate one after the transition by itself.
     LDA #$05 ; STA $8000 ; LDA #$66 ; STA $8001
-
-    // We use DEC here to make it possible to set flag_trans to e.g. 255 for 255 frames of showing the counter.
-    DEC {flag_trans}
 
     LDA {last_seconds} ; JSR hex_to_dec ; TAX
     LDA {last_frames} ; JSR hex_to_dec ; TAY

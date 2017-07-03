@@ -24,6 +24,12 @@ handle_stage_select:
     // Make it so we've beaten no Wily stages
     LDA #$00 ; STA $75
 
+    // Reset this in case its non-zero.
+    LDA #$00 ; STA {trans_timer}
+
+    // Make sure the game sets banks correctly (might not be neccessary)
+    LDA #$01 ; STA $1B
+
     // Enter Break Man
     JMP {org_break_man}
 
@@ -66,6 +72,12 @@ handle_stage_select:
 stage_select:
     // Store stage index
     STA $22 ; STA $0F
+
+    // Reset this in case its non-zero.
+    LDA #$00 ; STA {trans_timer}
+
+    // Make sure the game sets banks correctly (might not be neccessary)
+    LDA #$01 ; STA $1B
 
     TYA ; PHA
 
