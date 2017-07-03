@@ -51,25 +51,28 @@ start_of_stage:
 
 trans_start:
   .hori:
-    JSR .main
-    LDA $F9
-    SEC
+    LDA #60 ; STA {trans_timer} ; JSR .main
+    LDA $F9 ; SEC
     RTS
 
   .vert:
-    JSR .main
+    LDA #80 ; STA {trans_timer} ; JSR .main
     JSR {org_trans_start_vert_jsr}
     RTS
 
   .boss:
     JSR $F89A
-    JSR .main
+    LDA $22 ; CMP #$0F ; BEQ .boss_refights
+    LDA #60 ; STA {trans_timer} ; JSR .main
+    .boss_refights:
+      RTS
+
+  .teleport:
+    STA $5C0
+    LDA #12 ; STA {trans_timer} ; JSR .main
     RTS
 
   .main:
-    // Show frame counter for 1 second.
-    LDA #60 ; STA {trans_timer}
-
     LDA {timer_frames} ; STA {last_frames}
     LDA {timer_seconds} ; STA {last_seconds}
     RTS

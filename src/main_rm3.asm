@@ -19,6 +19,7 @@ define org_trans_boss_hook $82AC
 
 incsrc "defines.asm"
 incsrc "bank02.asm"
+incsrc "bank12.asm"
 incsrc "bank18.asm"
 incsrc "bank1c.asm"
 incsrc "bank1e.asm"

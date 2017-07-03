@@ -34,8 +34,6 @@
 
 # TODO (if the stars align)
 
-- Clear counter after each boss in refights.
-
 - Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).
 
 - Teleport within stages, similar to lttphack.
