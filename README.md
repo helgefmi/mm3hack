@@ -38,10 +38,6 @@
 
 - Fix problems in the end of Gemini stage.
 
-- Fix bug with loading Proto "stage" sometimes.
-
-- Fix frame counter for boss fights.
-
 - Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).
 
 - Teleport within stages, similar to lttphack.

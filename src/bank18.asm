@@ -9,6 +9,18 @@ handle_stage_select:
     INC {current_order_is_drawn} ; JSR draw_current_order
 
   .current_order_is_drawn:
+    // Reset this in case its non-zero.
+    LDA #$00 ; STA {trans_timer}
+
+    // Make sure the game sets banks correctly (might not be neccessary).
+    LDA #$01 ; STA $1B
+
+    // We have defeated no stages.
+    LDA #$00 ; STA $60 ; STA $61 ; STA $75
+
+    // Not sure what it does, but it fixes a bug for Break Man.
+    LDA #$00 ; STA $5A
+
     LDA $14 ; AND #$10 ; BNE .pressed_start
     LDA $14 ; AND #$20 ; BNE .pressed_select
     LDA $14 ; AND #$40 ; BNE .pressed_b
@@ -21,21 +33,12 @@ handle_stage_select:
     LDA $12 ; CLC ; ADC $13
     TAY ; CPY #$04 ; BNE .select_normal_stage
 
-    // Make it so we've beaten no Wily stages
-    LDA #$00 ; STA $75
-
-    // Reset this in case its non-zero.
-    LDA #$00 ; STA {trans_timer}
-
-    // Make sure the game sets banks correctly (might not be neccessary)
-    LDA #$01 ; STA $1B
+    LDA #$00 ; STA {current_order_is_drawn}
 
     // Enter Break Man
     JMP {org_break_man}
 
   .select_normal_stage:
-    LDA #$00 ; STA $60 ; STA $61
-
     LDA {org_stage_map},y
     JMP stage_select
 
@@ -73,12 +76,6 @@ stage_select:
     // Store stage index
     STA $22 ; STA $0F
 
-    // Reset this in case its non-zero.
-    LDA #$00 ; STA {trans_timer}
-
-    // Make sure the game sets banks correctly (might not be neccessary)
-    LDA #$01 ; STA $1B
-
     TYA ; PHA
 
     LDA {current_order}
@@ -105,7 +102,6 @@ stage_select:
 
   .done:
     LDA #$00 ; STA {current_order_is_drawn}
-    LDA #$00 ; STA {timer_frames} ; STA {timer_seconds}
     PLA ; TAY ; LDA $0F
     JSR {org_load_stage}
     RTS
