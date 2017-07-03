@@ -5,7 +5,7 @@ org $A023
     JSR handle_menu
 
 // Possibly same for JP/EN
-org $AD28
+org $B9E0
 handle_menu:
     LDA $14 ; AND #$20 ; BEQ .done
 
@@ -77,4 +77,4 @@ handle_menu:
 stage_select_palette:
     db $0F,$30,$15,$11,$0F,$37,$21,$10,$0F,$37,$26,$15,$0F,$37,$26,$0F
 
-warnpc $AE00
+warnpc $BAE0

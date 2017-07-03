@@ -36,8 +36,6 @@
 
 - Clear counter after each boss in refights.
 
-- Fix problems in the end of Gemini stage.
-
 - Skip cutscenes (can end the stage soon after he jumps into the air in Robot Master's for example).
 
 - Teleport within stages, similar to lttphack.
