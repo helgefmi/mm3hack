@@ -140,9 +140,9 @@ stage_select:
     db $6, $AA, $a9 // spark
     db $1, $A6, $a9 // magnet
     db $3, $A5, $a9 // hard
+    db $5, $A8, $a9 // snake
     db $4, $A7, $a9 // top
     db $7, $AC, $aB // shadow
-    db $5, $A8, $a9 // snake
     db $FF, $FF, $FF
     db $FF, $FF, $FF
     db $FF, $FF
